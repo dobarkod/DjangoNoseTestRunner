@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Run Django Nose tests",
+        "command": "django_nose_test"
+    }
+]
