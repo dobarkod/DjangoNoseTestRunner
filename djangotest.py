@@ -97,9 +97,17 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
             'working_dir': root_dir
         })
 
+    def save_before_run(self):
+        if self.view.file_name() and self.view.is_dirty():
+            # ensure that deleted files won't be resurrected
+            if os.path.exists(self.view.file_name()):
+                self.view.run_command('save')
+
     def run(self, edit):
         if 'Python' not in self.view.settings().get('syntax'):
             return
+
+        self.save_before_run()
 
         lines = self.get_lines()
 
