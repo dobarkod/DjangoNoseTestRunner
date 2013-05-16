@@ -6,6 +6,9 @@ you're trying to do is get this one test to pass? So do we.
 DjangoNoseTestRunner is a plugin for Sublime Text 2 that allows you to run
 the test under cursor in the currently opened test file.
 
+The plugin supports running tests using `django-nose` (recommended) or
+the standard Django test runner.
+
 ## Example usage
 
 Open one of your test files, navigate to a test function you want to run,
@@ -20,20 +23,26 @@ and hit Ctrl-T. Look at the output console for the test results.
 
 ## Configuration
 
-If you're using Virtualenv or have separate Django settings module for tests,
-you'll want to add a per-project configuration so that the plugin can
-run your tests properly.
+If you're using Virtualenv, have separate Django settings module for tests or
+want to use nose, you'll want to add a per-project configuration so that the
+plugin can run your tests properly.
 
 To add the per-project configuration, open your project file (Project->Edit
-in the menu), and add the following under the `settings` key:
+in the menu), and change it to looks like this:
 
-        "django-nose-test": {
-            "python": "/path/to/your/virtualenv/bin/python",
-            "django-settings": "myproject.settings.test"
+    {
+        "folders": [ ... ],
+        "settings":
+        {
+            "django-nose-test": {
+                "python": "/path/to/your/virtualenv/bin/python",
+                "django-settings": "myproject.settings.test",
+                "use-nose": true
+            }
         }
+    }
 
-If there's no `settings` key in the project file, just add one and add the
-above under it.
+The `django-nose-test` dictionary are the settings for DjangoNoseTestRunner.
 
 ## Usage
 
@@ -53,6 +62,10 @@ that's *not* in the the test function (eg. `class FooTest(TestCase):` lines).
 
 If the cursor is not inside any test function or test case class when you hit
 Ctrl-T, all the test from the file (but just that file) will be run.
+
+If you're using nose, the tests are located per-file (as described above). If
+you're using the standard Django test runner, the tests are per-app (one
+test method, one TestCase or the entire app test suite).
 
 ## License and copyright
 
