@@ -61,6 +61,7 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
         fname = self.view.file_name()
         components = []
         dname = None
+        app_name = None
         while True:
             components.append(os.path.basename(fname))
             dname = os.path.dirname(fname)
@@ -68,14 +69,18 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
                 return (None, None)  # search was unsuccessful
             if os.path.exists(os.path.join(dname, 'manage.py')):
                 break
+            if (os.path.isfile(os.path.join(dname, 'models.py')) or
+                    os.path.isfile(os.path.join(dname, 'models',
+                        '__init__.py'))):
+                app_name = os.path.basename(dname)
             fname = dname
         components.reverse()
         if components[-1].endswith('.py'):
             components[-1] = components[-1][:-3]
-        return (dname, '.'.join(components))
+        return (dname, app_name, '.'.join(components))
 
     def run_tests(self, regions):
-        root_dir, file_python_path = self.discover_manage_py()
+        root_dir, app_name, file_python_path = self.discover_manage_py()
         if not root_dir:
             return
 
@@ -86,11 +91,19 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
         if django_settings:
             cmd.append('--settings=' + django_settings)
 
+        use_nose = settings.get('use-nose', False)
+
         if regions != []:
             for r in regions:
-                cmd.append('%s:%s' % (file_python_path, r))
+                if use_nose:
+                    cmd.append('%s:%s' % (file_python_path, r))
+                else:
+                    cmd.append('%s.%s' % (app_name, r))
         else:
-            cmd.append(file_python_path)
+            if use_nose:
+                cmd.append(file_python_path)
+            else:
+                cmd.append(app_name)
 
         self.view.window().run_command('exec', {
             'cmd': cmd,
