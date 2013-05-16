@@ -1,0 +1,19 @@
+Upgrade notes (2013-05-16)
+==========================
+
+BACKWARDS COMPATIBILITY BREAK: if you're using nosetests, you'll need to
+add "use-node" key to your `django-nose-test` settings:
+
+    {
+        "folders": [ ... ],
+        "settings":
+        {
+            "django-nose-test": {
+                "use-nose": true,
+                [ ... ]
+            }
+        }
+    }
+
+New feature: running the tests using standard Django's test runner is now
+supported, and is the default.
