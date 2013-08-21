@@ -93,6 +93,8 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
 
         use_nose = settings.get('use-nose', False)
 
+        nose_options = settings.get('nose-options', [])
+
         if regions != []:
             for r in regions:
                 if use_nose:
@@ -104,6 +106,10 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
                 cmd.append(file_python_path)
             else:
                 cmd.append(app_name)
+
+        if use_nose:
+            for option in nose_options:
+                cmd.append(option)
 
         self.view.window().run_command('exec', {
             'cmd': cmd,

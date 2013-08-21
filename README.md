@@ -37,7 +37,8 @@ in the menu), and change it to looks like this:
             "django-nose-test": {
                 "python": "/path/to/your/virtualenv/bin/python",
                 "django-settings": "myproject.settings.test",
-                "use-nose": true
+                "use-nose": true,
+                "nose-options": ["--nocapture"] // optional and only used if use-nose is true
             }
         }
     }
