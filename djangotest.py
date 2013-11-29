@@ -95,14 +95,20 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
 
         nose_options = settings.get('nose-options', [])
 
+        doted_notation = settings.get('doted-notation', [])
+
         if regions != []:
             for r in regions:
                 if use_nose:
                     cmd.append('%s:%s' % (file_python_path, r))
+                elif doted_notation:
+                    cmd.append('%s.%s' % (file_python_path, r))
                 else:
                     cmd.append('%s.%s' % (app_name, r))
         else:
             if use_nose:
+                cmd.append(file_python_path)
+            elif doted_notation:
                 cmd.append(file_python_path)
             else:
                 cmd.append(app_name)
