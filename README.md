@@ -37,6 +37,7 @@ in the menu), and change it to looks like this:
             "django-nose-test": {
                 "python": "/path/to/your/virtualenv/bin/python",
                 "django-settings": "myproject.settings.test",
+                "doted-notation": true,  // optional and only used if "use-nose" is false
                 "use-nose": true,
                 "nose-options": ["--nocapture"] // optional and only used if use-nose is true
             }
@@ -44,6 +45,8 @@ in the menu), and change it to looks like this:
     }
 
 The `django-nose-test` dictionary are the settings for DjangoNoseTestRunner.
+
+The `doted-notation` required for Django 1.6 or [django-discover-runner](https://github.com/jezdez/django-discover-runner).
 
 ## Usage
 
