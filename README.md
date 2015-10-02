@@ -38,6 +38,7 @@ in the menu), and change it to looks like this:
                 "python": "/path/to/your/virtualenv/bin/python",
                 "django-settings": "myproject.settings.test",
                 "doted-notation": true,  // optional and only used if "use-nose" is false
+                "apps-dir": "my_apps",  // optional and only used if "doted-notation" is true
                 "use-nose": true,
                 "nose-options": ["--nocapture"] // optional and only used if use-nose is true
             }
