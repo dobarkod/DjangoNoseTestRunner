@@ -97,11 +97,16 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
 
         doted_notation = settings.get('doted-notation', [])
 
+        apps_dir = settings.get('apps-dir', None)
+
         if regions != []:
             for r in regions:
                 if use_nose:
                     cmd.append('%s:%s' % (file_python_path, r))
                 elif doted_notation:
+                    if apps_dir:
+                        file_python_path = self.file_path_without_apps_dir(file_python_path,
+                                                                           apps_dir)
                     cmd.append('%s.%s' % (file_python_path, r))
                 else:
                     cmd.append('%s.%s' % (app_name, r))
@@ -109,6 +114,9 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
             if use_nose:
                 cmd.append(file_python_path)
             elif doted_notation:
+                if apps_dir:
+                    file_python_path = self.file_path_without_apps_dir(file_python_path,
+                                                                       apps_dir)
                 cmd.append(file_python_path)
             else:
                 cmd.append(app_name)
@@ -121,6 +129,12 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
             'cmd': cmd,
             'working_dir': root_dir
         })
+
+    def file_path_without_apps_dir(self, file_python_path, apps_dir):
+        apps_dir_dot_path = apps_dir + '.'
+        if file_python_path.startswith(apps_dir_dot_path):
+            file_python_path = file_python_path[len(apps_dir_dot_path):]
+        return file_python_path
 
     def save_before_run(self):
         if self.view.file_name() and self.view.is_dirty():
