@@ -3,7 +3,7 @@
 Do you hate waiting seconds for the complete test suite to finish when all
 you're trying to do is get this one test to pass? So do we.
 
-DjangoNoseTestRunner is a plugin for Sublime Text 2 that allows you to run
+DjangoNoseTestRunner is a plugin for Sublime Text 2/3 that allows you to run
 the test under cursor in the currently opened test file.
 
 The plugin supports running tests using `django-nose` (recommended) or
@@ -19,7 +19,7 @@ and hit Ctrl-T. Look at the output console for the test results.
 * Download the plugin from GitHub - here's a link to the
   [current master](https://github.com/dobarkod/DjangoNoseTestRunner/archive/master.zip).
 * Unzip the plugin to your Sublime Text Packages directory
-  (eg. `~/.config/sublime-text-2/Packages/` on Linux)
+  (eg. `~/.config/sublime-text-2/Packages/` for Sublime Text 2 on Linux)
 
 ## Configuration
 

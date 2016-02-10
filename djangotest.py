@@ -88,8 +88,14 @@ class DjangoNoseTestCommand(sublime_plugin.TextCommand):
         cmd = [settings.get('python', 'python'), 'manage.py', 'test']
 
         django_settings = settings.get('django-settings', '')
+
         if django_settings:
             cmd.append('--settings=' + django_settings)
+
+        django_testrunner = settings.get('django_testrunner', '')
+
+        if django_testrunner:
+            cmd.append('--testrunner=' + django_testrunner)
 
         use_nose = settings.get('use-nose', False)
 
